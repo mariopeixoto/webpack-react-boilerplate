@@ -12,7 +12,7 @@ class Layout extends React.Component {
       <html>
         <head>
           <meta charSet='utf-8' />
-          <title>Jhonny</title>
+          <title>Webpack React Boilerplate</title>
           <meta name='viewport' content='width=device-width' />
           <link rel='' />
         </head>
