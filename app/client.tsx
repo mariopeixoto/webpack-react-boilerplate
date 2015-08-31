@@ -10,8 +10,8 @@ var Route = Router.Route,
 //To enable React extension
 //window.React = React;
 
-import App from './views/App.tsx';
-import Website from './views/website/Website.tsx';
+import * as App from './views/App.tsx';
+import * as Website from './views/website/Website.tsx';
 
 const routes = (
   <Route handler={App} path='/'>
