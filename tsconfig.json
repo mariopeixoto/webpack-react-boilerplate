@@ -3,7 +3,8 @@
   },
   "files": [
     "app/client.tsx",
-    "typings/react/react-global.d.ts",
+    "typings/react/react.d.ts",
+    "typings/react/react-addons.d.ts",
     "typings/react/react-router.d.ts"
   ]
 }

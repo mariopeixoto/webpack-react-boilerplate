@@ -3,7 +3,7 @@
 // Definitions by: Yuichi Murata <https://github.com/mrk21>, Václav Ostrožlík <https://github.com/vasek17>
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
 
-///<reference path='../react/react-global.d.ts' />
+///<reference path='../react/react.d.ts' />
 ///<reference path='../react/react-addons.d.ts' />
 
 declare module ReactRouter {

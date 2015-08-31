@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-class Website extends React.Component<any,any> {
+class Website extends React.Component<any, any> {
   render(){
     return (
       <div>
