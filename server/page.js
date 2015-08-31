@@ -14,7 +14,6 @@ class Layout extends React.Component {
           <meta charSet='utf-8' />
           <title>Webpack React Boilerplate</title>
           <meta name='viewport' content='width=device-width' />
-          <link rel='' />
         </head>
         <body>
           <div id='app'></div>

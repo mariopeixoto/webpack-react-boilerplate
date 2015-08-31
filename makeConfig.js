@@ -1,17 +1,23 @@
 'use strict';
 var webpack = require('webpack');
 var path = require('path');
-var glob = require('glob');
 
 var buildEntries = function(hot) {
+  var prefix = './app/';
+  var entryFiles = ['./app/client.js'];
   var devServer = 'webpack-dev-server/client?http://localhost:3001';
   var hotModuleUpdate = 'webpack/hot/dev-server';
   var entries = {};
-  if(hot) {
-    entries.client = ['./app/client.js', hotModuleUpdate];
+  entryFiles.map(function (entry) {
+    var entryName = entry.slice(prefix.length).split('.js')[0];
+    if(hot) {
+      entries[entryName] = [entry, hotModuleUpdate];
+    } else {
+      entries[entryName] = entry;
+    }
+  });
+  if (hot) {
     entries.devClient = devServer;
-  } else {
-    entries.client = './app/client.js';
   }
   return entries;
 };
@@ -24,16 +30,26 @@ var buildJsLoader = function(hot) {
   }
 };
 
-var buildPlugins = function(hot, plugins) {
+var buildPlugins = function(hot, plugins, env) {
   if (hot) {
     return plugins.concat([
-      new webpack.HotModuleReplacementPlugin()
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NoErrorsPlugin()
+    ]);
+  } else if (env.production) {
+    return plugins.concat([
+      new webpack.optimize.UglifyJsPlugin({
+  			compressor: {
+  				warnings: false
+  			}
+  		}),
+  		new webpack.optimize.DedupePlugin()
     ]);
   }
   return plugins;
 };
 
-module.exports = function makeConfig(hot, publicPath, root) {
+module.exports = function makeConfig(hot, publicPath, apiPath) {
 
   var _env = process.env.NODE_ENV;
   var env = {
@@ -44,9 +60,6 @@ module.exports = function makeConfig(hot, publicPath, root) {
   };
 
   var jsLoaders = buildJsLoader(hot);
-  var commonLoaders = [
-  	{ test: /\.jsx?$/, loaders: jsLoaders, exclude: /node_modules/ }
-  ];
   var assetsPath = path.join(__dirname, 'public', 'assets');
 
   var jsFileName = env.development === true ? '[name].js' : '[name].[hash].js';
@@ -62,37 +75,28 @@ module.exports = function makeConfig(hot, publicPath, root) {
   			publicPath: publicPath
   		},
   		module: {
-  			loaders: commonLoaders.concat([
-  				// { test: /\.css$/, loader: 'style-loader!css-loader' },
-          // { test: /\.scss$/, loader: 'style-loader!css-loader!sass-loader' },
-  			])
+  			loaders: [
+          { test: /\.jsx?$/, loaders: jsLoaders, exclude: /node_modules/ },
+          { test: /\.less$/, loader: 'style-loader!css-loader!less-loader' },
+          { test: /\.json/, loader: 'json-loader' },
+          { test: /\.jpg$/,  loader: 'url?limit=10000&mimetype=image/jpeg' },
+          { test: /\.png$/,  loader: 'url?limit=10000&mimetype=image/png' },
+          { test: /\.woff$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
+          { test: /\.ttf$/,  loader: 'url?limit=10000&mimetype=application/octet-stream' },
+          { test: /\.eot$/,  loader: 'file' },
+          { test: /\.svg$/,  loader: 'url?limit=10000&mimetype=image/svg+xml' },
+  			]
   		},
   		plugins: buildPlugins(hot, [
         function(compiler) {
           this.plugin('done', function(stats) {
             require('fs').writeFileSync(path.join(__dirname, 'server', 'stats.generated.json'), JSON.stringify(stats.toJson()));
           });
-        }
-      ])
-  	},
-  	{
-  		// The configuration for the server-side rendering
-  		name: 'server-side rendering',
-  		entry: root + '/server/page.js',
-  		target: 'node',
-  		output: {
-  			path: assetsPath,
-  			filename: root + '/../../server/page.generated.js',
-  			publicPath: publicPath,
-  			libraryTarget: 'commonjs2'
-  		},
-  		externals: /^[a-z\-0-9]+$/,
-  		module: {
-  			loaders: commonLoaders.concat([
-  				// { test: /\.css$/,  loader: path.join(__dirname, 'server', 'style-collector') + '!css-loader' },
-          // { test: /\.scss$/,  loader: path.join(__dirname, 'server', 'style-collector') + '!css-loader!sass-loader' },
-  			])
-  		}
+        },
+        new webpack.DefinePlugin({
+          API_PATH: JSON.stringify(apiPath),
+        })
+      ], env)
   	}
   ];
 };

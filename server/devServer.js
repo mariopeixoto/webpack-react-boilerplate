@@ -1,4 +1,5 @@
 'use strict';
+require('babel/register');
 
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
@@ -26,7 +27,7 @@ new WebpackDevServer(webpack(webpackConfig), {
 	//Server
 	var express = require('express');
 	var path = require('path');
-	var page = require('./page.generated');
+	var page = require('./page');
 
 	var app = express();
 
