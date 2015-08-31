@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import * as React from 'react';
 
 class App extends React.Component {
   render() {

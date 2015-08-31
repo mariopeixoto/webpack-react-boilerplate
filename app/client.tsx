@@ -1,12 +1,16 @@
 'use strict';
 
-/* global window, document */
-import React from 'react';
-import BrowserHistory from 'react-router/lib/BrowserHistory';
-import Router, {Route} from 'react-router';
 
+/* global window, document */
+import * as React from 'react';
+//import * as BrowserHistory from 'react-router/lib/BrowserHistory';
+//import * as Router from 'react-router';
+//import {Route} from 'react-router';
+declare var Route;
+declare var Router;
+declare var BrowserHistory;
 //To enable React extension
-window.React = React;
+//window.React = React;
 
 import App from './views/App.tsx';
 import Website from './views/website/Website.tsx';
