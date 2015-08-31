@@ -33,8 +33,7 @@ var buildJsLoader = function(hot) {
 var buildPlugins = function(hot, plugins, env) {
   if (hot) {
     return plugins.concat([
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoErrorsPlugin()
+      new webpack.HotModuleReplacementPlugin()
     ]);
   } else if (env.production) {
     return plugins.concat([
