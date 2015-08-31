@@ -1,7 +1,6 @@
-'use strict';
 import * as React from 'react';
 
-class Website extends React.Component {
+class Website extends React.Component<any,any> {
   render(){
     return (
       <div>

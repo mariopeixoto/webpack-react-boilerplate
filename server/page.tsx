@@ -1,6 +1,7 @@
 import * as React from 'react';
+declare var module;
 
-class Layout extends React.Component {
+class Layout extends React.Component<any,any> {
   render() {
     let hotUpdate;
     if (this.props.hot) {
@@ -27,7 +28,7 @@ class Layout extends React.Component {
 
 let layoutComponent = React.createFactory(Layout);
 
-export default function(req, stats, hot) {
+module.exports = function(req, stats, hot) {
   const assets = stats.assetsByChunkName;
   const publicPath = stats.publicPath;
   var html = React.renderToStaticMarkup(layoutComponent({

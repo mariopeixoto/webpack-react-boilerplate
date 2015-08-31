@@ -30,7 +30,7 @@
     "react": "^0.13.3",
     "react-hot-loader": "^1.2.7",
     "react-proxy-loader": "^0.3.4",
-    "react-router": "^1.0.0-beta2",
+    "react-router": "^0.13.3",
     "sass-loader": "^1.0.2",
     "style-loader": "^0.12.3",
     "ts-jsx-loader": "^0.2.1",
