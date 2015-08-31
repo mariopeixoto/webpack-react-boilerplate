@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+  },
+  "files": [
+    "app/client.tsx",
+    "typings/react/react-global.d.ts"
+  ]
+}
