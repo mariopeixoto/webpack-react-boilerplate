@@ -8,8 +8,8 @@ import Router, {Route} from 'react-router';
 //To enable React extension
 window.React = React;
 
-import App from './views/App';
-import Website from './views/website/Website';
+import App from './views/App.tsx';
+import Website from './views/website/Website.tsx';
 
 const routes = (
   <Route component={App}>

@@ -8,10 +8,10 @@ var buildEntries = function(hot) {
   var hotModuleUpdate = 'webpack/hot/dev-server';
   var entries = {};
   if(hot) {
-    entries.client = ['./app/client.js', hotModuleUpdate];
+    entries.client = ['./app/client.tsx', hotModuleUpdate];
     entries.devClient = devServer;
   } else {
-    entries.client = './app/client.js';
+    entries.client = './app/client.tsx';
   }
   return entries;
 };
@@ -45,11 +45,19 @@ module.exports = function makeConfig(hot, publicPath, root) {
 
   var jsLoaders = buildJsLoader(hot);
   var commonLoaders = [
-  	{ test: /\.jsx?$/, loaders: jsLoaders, exclude: /node_modules/ }
+  	{ test: /\.jsx?$/, loaders: jsLoaders, exclude: /node_modules/ },
+    { test: /\.tsx?$/, loader: 'ts-loader' }
   ];
   var assetsPath = path.join(__dirname, 'public', 'assets');
 
   var jsFileName = env.development === true ? '[name].js' : '[name].[hash].js';
+
+  var tsOptions = {
+    compiler: 'typescript',
+    compilerOptions: {
+      jsx: 'react'
+    }
+  };
 
   return [
   	{
@@ -67,6 +75,7 @@ module.exports = function makeConfig(hot, publicPath, root) {
           // { test: /\.scss$/, loader: 'style-loader!css-loader!sass-loader' },
   			])
   		},
+      ts: tsOptions,
   		plugins: buildPlugins(hot, [
         function(compiler) {
           this.plugin('done', function(stats) {
@@ -77,8 +86,11 @@ module.exports = function makeConfig(hot, publicPath, root) {
   	},
   	{
   		// The configuration for the server-side rendering
+      resolve: {
+        extensions: ['', '.tsx', '.ts', '.webpack.js', '.web.js', '.js']
+      },
   		name: 'server-side rendering',
-  		entry: root + '/server/page.js',
+  		entry: root + '/server/page.tsx',
   		target: 'node',
   		output: {
   			path: assetsPath,
@@ -86,6 +98,7 @@ module.exports = function makeConfig(hot, publicPath, root) {
   			publicPath: publicPath,
   			libraryTarget: 'commonjs2'
   		},
+      ts: tsOptions,
   		externals: /^[a-z\-0-9]+$/,
   		module: {
   			loaders: commonLoaders.concat([
