@@ -1,11 +1,17 @@
-
+import {combineReducers} from 'redux';
 import * as types from './todos/actionTypes';
 
-export default function myReducer(state={todos:[]}, action) {
+function todos(state=[], action) {
   switch (action.type) {
     case types.ADD_TODO:
-      return {todos: [...state.todos, action.text + ";;"]};
+      return [...state, action.text + ";"];
     default:
       return state;
   }
 }
+
+const rootReducer = combineReducers({
+  todos
+});
+
+export default rootReducer;
