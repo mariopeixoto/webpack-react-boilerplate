@@ -1,7 +1,6 @@
 'use strict';
 import { connect } from 'react-redux';
 import Todos from './components/Todos';
-import reducer from './reducer';
 
 var select = function(state) {
   return {
@@ -10,6 +9,5 @@ var select = function(state) {
 };
 
 export default {
-  Todos: connect(select)(Todos),
-  reducer: reducer
+  Todos: connect(select)(Todos)
 };
