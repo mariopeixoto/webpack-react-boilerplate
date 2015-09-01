@@ -17,18 +17,12 @@ const history = createHistory();
 import { compose, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
-import { devTools, persistState } from 'redux-devtools';
-
-const finalCreateStore = compose(
-  // Provides support for DevTools:
-  devTools(),
-  // Lets you write ?debug_session=<name> in address bar to persist debug sessions
-  persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)),
-  createStore
-);
 
 import reducers from './reducers';
-const store = finalCreateStore(reducers);
+import configureStore from './configureStore';
+
+const store = configureStore();
+//const store = finalCreateStore(reducers);
 
 const element = (
   <Provider store={store}>
