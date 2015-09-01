@@ -1,9 +1,8 @@
 'use strict';
 import React from 'react';
-import { connect } from 'react-redux';
-import {TodoActions} from '../../actions';
+import * as TodoActions from '../actions';
 
-class Todo extends React.Component {
+class Todos extends React.Component {
   constructor(props, context) {
     super(props, context);
     this._renderTodos = this._renderTodos.bind(this);
@@ -42,10 +41,4 @@ class Todo extends React.Component {
   }
 }
 
-var select = function(state) {
-  return {
-    todos: state.todos
-  };
-};
-
-export default connect(select)(Todo);
+export default Todos;

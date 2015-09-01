@@ -3,19 +3,20 @@
 /* global window, document */
 import React from 'react';
 
+//To enable React extension
+window.React = React;
+
 /* react router */
 import {Router} from 'react-router';
 import createHistory from 'history/lib/createBrowserHistory';
 import routes from './routes';
 
+const history = createHistory();
+
 /* redux */
-import reducers from './reducers';
 import { compose, createStore } from 'redux';
 import { Provider } from 'react-redux';
-
-// React components for Redux DevTools
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
-// Redux DevTools store enhancers
 import { devTools, persistState } from 'redux-devtools';
 
 const finalCreateStore = compose(
@@ -26,18 +27,15 @@ const finalCreateStore = compose(
   createStore
 );
 
-//To enable React extension
-window.React = React;
-
-const history = createHistory();
+import reducers from './reducers';
 const store = finalCreateStore(reducers);
 
 const element = (
   <Provider store={store}>
     {() =>
       <div>
-        <Router history={history} routes={routes} key='router'/>
-        <DebugPanel key='debug-panel' top right bottom>
+        <Router history={history} routes={routes} />
+        <DebugPanel top right bottom>
           <DevTools store={store} monitor={LogMonitor} />
         </DebugPanel>
       </div>

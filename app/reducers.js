@@ -1,6 +1,6 @@
 'use strict';
 import {combineReducers} from 'redux';
-import todos from './todos';
+import {reducer as todos} from './todos';
 
 const rootReducer = combineReducers({
   todos

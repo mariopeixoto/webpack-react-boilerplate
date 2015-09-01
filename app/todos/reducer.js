@@ -1,9 +1,9 @@
 'use strict';
-import {ADD_TODO} from '../constants/actionTypes';
+import * as types from './actionTypes';
 
-export default function (state=[], action) {
+export default function(state=[], action) {
 	switch (action.type) {
-		case ADD_TODO:
+		case types.ADD_TODO:
       return [...state, action.text];
     default:
       return state;

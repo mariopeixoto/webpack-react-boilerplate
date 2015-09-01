@@ -3,11 +3,11 @@ import React from 'react';
 import {Route, IndexRoute} from 'react-router';
 
 /* routed components */
-import App from './components/App';
-import Todo from './components/todo/Todo';
+import App from './App';
+import {Todos} from './todos';
 
 export default (
   <Route path='/' component={App}>
-    <IndexRoute component={Todo} />
+    <IndexRoute component={Todos} />
   </Route>
 );
