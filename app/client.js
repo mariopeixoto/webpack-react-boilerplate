@@ -25,16 +25,18 @@ const store = configureStore();
 //const store = finalCreateStore(reducers);
 
 const element = (
-  <Provider store={store}>
-    {() =>
-      <div>
-        <Router history={history} routes={routes} />
-        <DebugPanel top right bottom>
-          <DevTools store={store} monitor={LogMonitor} />
-        </DebugPanel>
-      </div>
-    }
-  </Provider>
+  <div>
+    <Provider store={store}>
+      {() =>
+        <div>
+          <Router history={history} routes={routes} />
+        </div>
+      }
+    </Provider>
+    <DebugPanel top right bottom>
+      <DevTools store={store} monitor={LogMonitor} />
+    </DebugPanel>
+  </div>
 );
 
 React.render(element, document.getElementById('app'));
