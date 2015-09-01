@@ -1,12 +1,14 @@
 'use strict';
 
+/* global window */
+
 import React from 'react';
 import { Provider } from 'react-redux';
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
 
 import {compose, createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import reducers from './reducers';
+import * as reducers from './reducers';
 import { devTools, persistState } from 'redux-devtools';
 
 /* react router */
@@ -22,12 +24,12 @@ const finalCreateStore = compose(
   persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
 )(createStore);
 
-//const rootReducer = combineReducers(reducers);
-const store = finalCreateStore(reducers);
+const rootReducer = combineReducers(reducers);
+const store = finalCreateStore(rootReducer);
 
 if (module.hot) {
   module.hot.accept('./reducers', () =>
-      store.replaceReducer(require('./reducers'))
+      store.replaceReducer(combineReducers(require('./reducers')))
   );
 }
 

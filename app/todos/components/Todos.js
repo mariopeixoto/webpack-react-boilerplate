@@ -1,6 +1,5 @@
 'use strict';
 import React from 'react';
-import * as TodoActions from '../actions';
 
 class Todos extends React.Component {
   constructor(props, context) {
@@ -16,11 +15,11 @@ class Todos extends React.Component {
   }
 
   _handleClick() {
-    const {dispatch} = this.props;
+    const {actions} = this.props;
     const newTodo = this.refs.newTodo.getDOMNode();
     const text = newTodo.value.trim();
     if (text) {
-      dispatch(TodoActions.addTodo(newTodo.value.trim()));
+      actions.addTodo(newTodo.value.trim());
       newTodo.value = '';
     }
 
