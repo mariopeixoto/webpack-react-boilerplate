@@ -33,7 +33,7 @@ class Todos extends React.Component {
         </ul>
         <div>
           <input type='text' ref='newTodo' />
-          <input type='submit' onClick={this._handleClick} value='Add Todo' />
+          <button onClick={this._handleClick}>Add Todo</button>
         </div>
       </div>
     );
