@@ -66,7 +66,7 @@ module.exports = function makeConfig(hot, publicPath, apiPath) {
   return [
   	{
   		// The configuration for the client
-  		name: 'browser',
+  		name: 'client',
   		entry: buildEntries(hot),
   		output: {
   			path: assetsPath,
