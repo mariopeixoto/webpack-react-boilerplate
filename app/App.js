@@ -1,10 +1,9 @@
 'use strict';
 
-/* global window */
+/* global window, __DEVTOOLS__ */
 
 import React from 'react';
 import { Provider } from 'react-redux';
-import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
 
 import {compose, createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
@@ -33,6 +32,18 @@ if (module.hot) {
   );
 }
 
+let devToolsElement;
+if (__DEVTOOLS__) {
+  const { DevTools, DebugPanel, LogMonitor } = require('redux-devtools/lib/react');
+  devToolsElement = (
+    <DebugPanel top right bottom>
+      <DevTools store={store}
+                monitor={LogMonitor}/>
+    </DebugPanel>
+  );
+}
+
+
 class App extends React.Component {
   render() {
     return (
@@ -40,10 +51,7 @@ class App extends React.Component {
         <Provider store={store}>
           {() => <Router history={history} routes={routes}/>}
         </Provider>
-        <DebugPanel top right bottom>
-          <DevTools store={store}
-                    monitor={LogMonitor}/>
-        </DebugPanel>
+        {devToolsElement}
       </div>
     );
   }

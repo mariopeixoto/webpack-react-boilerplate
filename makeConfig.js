@@ -87,13 +87,14 @@ module.exports = function makeConfig(hot, publicPath, apiPath) {
   			]
   		},
   		plugins: buildPlugins(hot, [
-        function(compiler) {
+        function() {
           this.plugin('done', function(stats) {
             require('fs').writeFileSync(path.join(__dirname, 'server', 'stats.generated.json'), JSON.stringify(stats.toJson()));
           });
         },
         new webpack.DefinePlugin({
-          API_PATH: JSON.stringify(apiPath),
+          __API_PATH__: JSON.stringify(apiPath),
+          __DEVTOOLS__: env.development
         })
       ], env)
   	}
