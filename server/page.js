@@ -1,5 +1,6 @@
 'use strict';
 import React from 'react';
+import ReactDOMServer from 'react-dom/server';
 
 class Layout extends React.Component {
   render() {
@@ -30,7 +31,7 @@ let layoutComponent = React.createFactory(Layout);
 export default function(req, stats, hot) {
   const assets = stats.assetsByChunkName;
   const publicPath = stats.publicPath;
-  var html = React.renderToStaticMarkup(layoutComponent({
+  var html = ReactDOMServer.renderToStaticMarkup(layoutComponent({
     publicPath,
     assets,
     hot
